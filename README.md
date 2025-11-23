@@ -1,133 +1,240 @@
-# 🖥️ **Laptop Price Prediction — Machine Learning Project**
+# 💻 **Laptop Price Prediction — Machine Learning Project**
 
-## 📌 **Project Overview**
+## 📘 *MBA IT — Data Analytics Project*
 
-This project aims to **predict laptop prices** based on various hardware and brand specifications using **Linear Regression**. The goal is to build an interpretable baseline model that identifies how different laptop features influence pricing.
+### 👨‍🎓 **Student**
 
----
-
-## 🧾 **Nature of the Dataset**
-
-- Contains **823 rows** and **19 columns** of laptop specifications.
-- Includes **categorical** (brand, processor name, OS, etc.) and **numerical** (RAM, SSD, weight, ratings, etc.) features.
-- **Target Variable:** `Price`
-- **Features Include:**
-  - Brand
-  - Processor brand, processor name, generation
-  - RAM size & type
-  - SSD & HDD storage
-  - Operating System & OS bit
-  - GPU size
-  - Weight
-  - Warranty
-  - Number of ratings & reviews
+- **Shlok Tilokani** (ID: 24030141072)
 
 ---
 
-## 🧪 **Steps Performed in the Project**
+## 🔍 **Project Overview**
 
-### **1️⃣ Data Loading**
+This project aims to build a machine learning model that predicts **laptop prices** based on specifications such as brand, processor, RAM, storage, ratings, etc.
 
-- Loaded dataset using **Pandas**.
-- Viewed sample rows to understand structure.
+The workflow includes:
 
-### **2️⃣ Exploratory Data Analysis (EDA)**
+- Dataset exploration (EDA)
+- Preprocessing & feature engineering
+- Model training using **Linear Regression**
+- Evaluation using statistical metrics
+- Visualization of model performance
+- Testing with real samples
 
-- Checked dataset **shape**, **info**, and **data types**.
-- Verified **missing values** — none found.
-- Generated **summary statistics** for numerical columns.
-- Created **correlation heatmap** to observe relationships:
-  - Price showed weak correlation with ratings/reviews.
-  - Some categorical columns likely influence pricing non-linearly.
+---
 
-### **3️⃣ Data Preprocessing**
+## 🌱 **Nature of Dataset**
 
-- Selected independent features (X) and target variable (y = Price).
-- Encoded categorical variables using **One-Hot Encoding**.
-- Split data into **80% training** and **20% testing**.
+According to *main.pdf* and *documentation.pdf*, the dataset contains **823 laptop entries** with **19 columns**. fileciteturn1file0
 
-### **4️⃣ Model Building**
+### **🔹 Features Include:**
 
-- Used **Linear Regression** as baseline model.
-- Trained model on training data.
-- Generated predictions on test data.
+- `brand`
+- `processor_brand`
+- `processor_name`
+- `processor_gnrtn`
+- `ram_gb`
+- `ram_type`
+- `ssd`
+- `hdd`
+- `os`
+- `os_bit`
+- `graphic_card_gb`
+- `weight`
+- `warranty`
+- `rating`
+- `Number of Ratings`
+- `Number of Reviews`
 
-### **5️⃣ Model Evaluation**
+### **🎯 Target Variable:**
 
-Used the following metrics:
+- `Price`
 
-- **Mean Squared Error (MSE):** 576,410,115.15
+### **Dataset Properties:**
+
+- Total rows: **823**, Columns: **19**
+- No missing values observed in dataset sample
+- Combination of categorical + numerical features
+
+---
+
+## ⚙️ **Project Workflow**
+
+### **1️⃣ Import Libraries**
+
+Libraries used:
+
+- `pandas`, `numpy` → Data handling
+- `matplotlib`, `seaborn` → Visualization
+- `scikit-learn` → Modeling & evaluation
+
+---
+
+### **2️⃣ Load the Dataset**
+
+```python
+df = pd.read_csv('laptopPrice.csv')
+df.head()
+```
+
+Sample rows in *main.pdf* show first few entries with brand, RAM, OS, ratings, etc. fileciteturn1file0
+
+---
+
+### **3️⃣ Exploratory Data Analysis (EDA)**
+
+The following were analyzed: fileciteturn1file0
+
+- Dataset shape → `(823, 19)`
+- Data types
+- Missing values (none detected)
+- Summary statistics of numerical columns
+- Correlation matrix
+- Heatmap showing relationships between `Price`, `Number of Ratings`, and `Number of Reviews`
+
+### **📊 Key EDA Insights**
+
+- `Number of Ratings` and `Number of Reviews` are strongly correlated.
+- Linear patterns observed for several features → suitable for Linear Regression.
+- Wide variance in `Price` (min ~₹20k, max ~₹4.4L), contributing to high MSE.
+
+A sample correlation heatmap is shown in *main.pdf* (page 3). fileciteturn1file0
+
+---
+
+### **4️⃣ Data Preprocessing**
+
+From *documentation.pdf* steps:
+ fileciteturn1file1
+
+- Removed duplicates
+- Handled missing values
+- Converted datatypes where required
+- Applied **one-hot encoding** for categorical columns
+- Performed **train-test split** → 80% training, 20% testing
+- Feature scaling not required for Linear Regression
+
+Code sample:
+
+```python
+X = df.drop('Price', axis=1)
+y = df['Price']
+X = pd.get_dummies(X, drop_first=True)
+X_train, X_test, y_train, y_test = train_test_split(
+    X, y, test_size=0.2, random_state=42
+)
+```
+
+---
+
+### **5️⃣ Model Building — Linear Regression**
+
+Linear Regression was selected for:
+ fileciteturn1file1
+
+- Simplicity and interpretability
+- Baseline benchmark
+- Fast computation
+- Works well with linear relationships
+
+### **Model Code:**
+
+```python
+model = LinearRegression()
+model.fit(X_train, y_train)
+y_pred = model.predict(X_test)
+```
+
+---
+
+### **6️⃣ Model Evaluation**
+
+The following metrics were calculated: fileciteturn1file1
+
+### **📊 Evaluation Metrics**
+
+| Metric | Value | Interpretation |
+|--------|--------|----------------|
+| **Mean Squared Error (MSE)** | 576,410,115.15 | High due to large price range |
+| **R² Score** | 0.7042 | Model explains **70%** variance |
+| **Approx Accuracy** | 81.84% | Based on MAPE |
+
+### **📝 Interpretation**
+
+- Good baseline performance
+- Some prediction errors due to nonlinear relationships
+- Price-sensitive features (e.g., high-end processors) cause larger error ranges
+
+---
+
+### **7️⃣ Visualization — Actual vs Predicted**
+
+Graphs included in *main.pdf*:
+ fileciteturn1file0
+
+- **Line Plot** → Overlapped actual vs predicted prices across test samples
+- **Scatter Plot** → Shows linear trend between predicted and actual prices
+
+These plots confirm:
+
+- Predictions follow real price trends
+- Some deviations for extremely high-priced laptops
+
+---
+
+## 🧪 **8️⃣ Test Case Results**
+
+Sample of 5 test cases from *documentation.pdf*: fileciteturn1file1
+
+| Actual Price | Predicted Price | Abs Error | Absolute % Error |
+|--------------|----------------|-----------|-------------------|
+| 33,690 | 33,809 | 119 | 0.35% |
+| 86,990 | 72,695 | 14,294 | 16.43% |
+| 39,490 | 41,486 | 1,996 | 5.06% |
+| 63,990 | 79,625 | 15,635 | 24.43% |
+| 134,990 | 139,333 | 4,343 | 3.22% |
+
+### **Insights from Test Cases**
+
+- Very accurate predictions for mid-range laptops
+- Higher errors for outlier/rare specifications
+- Overall model accuracy is **~82%**
+
+---
+
+## 💡 **Project Insights**
+
+- Linear Regression works well for baseline prediction of laptop prices
+- Dataset is clean and well-structured
+- Categorical encoding increases model reliability
+- Strong correlations among rating-based features
+
+---
+
+## 🏁 **Conclusion**
+
+The model achieved:
+
 - **R² Score:** 0.7042
-- **Approx Accuracy:** ~81.8%
+- **Approx Accuracy:** 81.8%
 
-### **6️⃣ Visualizations**
+This confirms that **Linear Regression successfully predicts laptop prices** with fairly good accuracy. It provides:
 
-- **Line Graph:** Actual vs Predicted prices for test set.
-- **Scatter Plot:** Correlation between actual & predicted prices.
-  - Majority of points lie near diagonal → good prediction consistency.
-
-### **7️⃣ Test Cases (Random Samples)**
-
-| Actual Price | Predicted Price |
-|-------------:|----------------:|
-| 33690        | 33809           |
-| 86990        | 72695           |
-| 39490        | 41486           |
-| 63990        | 79625           |
-| 134990       | 139333          |
+- Interpretability
+- Fast computation
+- Reliable baseline for comparison with advanced models
 
 ---
 
-## 🧠 **Insights Gained**
+## 🚀 **Future Work**
 
-- Model performs reasonably well with **~82% accuracy**.
-- Price is **weakly correlated** with ratings & reviews → these are not strong predictors.
-- Categorical features like **brand**, **processor type**, **RAM**, and **storage** likely carry significant influence.
-- Linear Regression captures base patterns but misses complex nonlinear interactions.
-
----
-
-## ⚙️ **Model Parameters & Settings**
-
-- **Algorithm:** Linear Regression
-- **Train-Test Split:** 80/20 (random_state = 42)
-- **Encoding Method:** One-Hot Encoding
-- **Scaling:** Not used (optional for LR)
-- **Evaluation Metrics:** MSE, R², MAPE-derived accuracy
+- Train advanced models: Random Forest, XGBoost, Neural Networks
+- Add new features: brand popularity, market trends
+- Hyperparameter tuning
+- Deploy model as a **web app** with real-time prediction
 
 ---
 
-## 📌 **Conclusion**
+### ⭐ **Thank You!**
 
-- Linear Regression provides a good baseline with **decent accuracy (~82%)**.
-- The model is simple, interpretable, and effective for initial price prediction tasks.
-- Some prediction errors occur due to:
-  - Nonlinear relationships
-  - Underrepresented laptop configurations
-  - Missing hidden factors (brand reputation, latest market trends)
-
----
-
-## 🚀 **Future Scope**
-
-- Train more complex models:
-  - Random Forest
-  - XGBoost
-  - Neural Networks
-- Add additional features:
-  - Release year
-  - GPU model
-  - Display type
-- Deploy model via **Flask/Streamlit web app** for real-time price prediction.
-
----
-
-## 🙏 **Acknowledgement**
-
-This project is part of the **MBA-IT (Data Analytics)** coursework and demonstrates practical application of regression models in real-world pricing problems.
-
----
-
-### ⭐ **Thank You for Reading!**
-
-Feel free to contribute, improve, or suggest ideas for this project.
+Feel free to ⭐ star the repo if this project helped you!
