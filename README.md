@@ -1,7 +1,5 @@
 # 💻 **Laptop Price Prediction — Machine Learning Project**
 
----
-
 ![Laptop Price Prediction](res/video.gif)
 
 ---
