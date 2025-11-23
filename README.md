@@ -1,11 +1,5 @@
 # 💻 **Laptop Price Prediction — Machine Learning Project**
 
-## 📘 *MBA IT — Data Analytics Project*
-
-### 👨‍🎓 **Student**
-
-- **Shlok Tilokani** (ID: 24030141072)
-
 ---
 
 ![Laptop Price Prediction](res/video.gif)
