@@ -8,6 +8,10 @@
 
 ---
 
+![Laptop Price Prediction](res/video.gif)
+
+---
+
 ## 🔍 **Project Overview**
 
 This project aims to build a machine learning model that predicts **laptop prices** based on specifications such as brand, processor, RAM, storage, ratings, etc.
